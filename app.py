@@ -1,7 +1,7 @@
 ## Flask app routing process
 
 
-from flask import Flask
+from flask import Flask,render_template,request
 
 
 ## create a simple application
@@ -19,14 +19,21 @@ def index():
 
 @app.route("/success/<int:score>")
 def success(score):
-    return "<h3>The Person has passed and the score is: </h3>"+ str(score)
+    return f"<h3>The Person has passed and the score is: {score}</h3>"
 
 
 #Varible rule for failure
 
-app.route("/fail/<int:score>")
-def success(score):
-    return "<h4>The Person has failed and the score is: </h4>"+ str(score)
+@app.route("/fail/<int:score>")
+def fail(score):
+    return f"<h4>The Person has failed and the score is: {score}</h4>"
+
+
+@app.route("/forms",methods=["GET","POST"])
+def form():
+    if request.method=="GET":
+        return render_template("form.html")
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
